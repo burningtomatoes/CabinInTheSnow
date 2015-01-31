@@ -2,6 +2,7 @@ var Game = {
     map: null,
     maps: [],
     lastMapId: null,
+    resetting: false,
 
     initialize: function () {
         Canvas.initialize();
@@ -11,41 +12,25 @@ var Game = {
     start: function () {
         Canvas.$canvas.hide();
 
+        console.info('[Game] Starting game...');
+
         // Clear out the persistent map cache so the entire game world is reset.
         this.maps = [];
         this.lastMapId = null;
 
-        // Generate the backstory for this game session randomly.
-        // This will generate the characters, where they were, what they did, what they know, etc.
-        Story.generateStory();
-
-        // Show the intro text (nametag / time)
-        IntroText.run(function (e) {
-            // Load up the main hall / living room and spawn the guests in the living room.
-            this.loadMap('main_room', function (map) {
-                e.done();
-
-                Story.spawnGuests(map);
-
-                Music.loopSound('rain_loop.mp3');
-
-                map.runScript(scrWalkIn);
-            });
-        }.bind(this));
-
-
+        // TODO Load up the map and set up the environment.
     },
 
-    resetting: false,
-
     reset: function (callback) {
+        if (this.resetting) {
+            return;
+        }
+
         if (callback == null) {
             callback = function() { };
         }
 
-        if (this.resetting) {
-            return;
-        }
+        console.info('[Game] Resetting game...');
 
         this.resetting = true;
 
@@ -80,8 +65,6 @@ var Game = {
             this.lastMapId = id;
 
             Camera.onMapLoaded();
-
-            $('#location').text(this.map.data.properties.name);
         }.bind(this);
 
         var execLoad = function() {
@@ -90,7 +73,7 @@ var Game = {
                 this.maps[id] = this.map;
                 this.map.load(id, function (okay) {
                     if (!okay) {
-                        alert('Something went wrong, could not load the next part of the game. Sorry... we let you down.');
+                        alert('Something went wrong, could not load the next part of the game.');
                         return;
                     }
 
