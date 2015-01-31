@@ -18,7 +18,7 @@ var Game = {
         this.maps = [];
         this.lastMapId = null;
 
-        // TODO Load up the map and set up the environment.
+        this.loadMap('forest_1');
     },
 
     reset: function (callback) {
