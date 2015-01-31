@@ -17,8 +17,9 @@ var Canvas = {
         this.$canvas = $('#game');
         this.canvas = this.$canvas[0];
         this.context = this.canvas.getContext('2d');
+        this.resize();
 
-        console.info('[Canvas] Canvas render resolution is ' + this.canvas.width + 'x' + this.canvas.height + '.');
+        $(window).resize(this.resize.bind(this));
 
         // Try to disable the "smooth" (stretched becomes blurry) scaling on the Canvas element
         // Instead, we want a "pixelated" effect (nearest neighbor scaling)
@@ -56,5 +57,35 @@ var Canvas = {
         }
 
         loop();
+    },
+
+    resize: function () {
+        var docWidth = $(document).width();
+        var docHeight = $(document).height();
+
+        var baseWidth = 640;
+        var baseHeight = 400;
+
+        this.canvas.width = baseWidth;
+        this.canvas.height = baseHeight;
+
+        var scaleWidth = baseWidth;
+        var scaleHeight = baseHeight;
+
+        var scale = 1;
+
+        while (scaleHeight < docHeight || scaleWidth < docWidth) {
+            scaleHeight *= 1.5;
+            scaleWidth *= 1.5;
+            scale *= 1.5;
+        }
+
+        $('#game')
+            .css('width', scaleWidth + 'px')
+            .css('height', scaleHeight + 'px');
+
+
+        console.info('[Canvas] Canvas render resolution is ' + this.canvas.width + 'x' + this.canvas.height + '.');
+        console.info('[Canvas] Rendering in browser at x' + scale + ' (' + scaleWidth + 'x' + scaleHeight + ').');
     }
 };
