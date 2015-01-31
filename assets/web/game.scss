@@ -33,6 +33,8 @@ img {
 body {
   background: #fff;
   color: #000;
+  $colShadow: rgba(255, 255, 255, 0.75);
+  text-shadow: 1px 1px 0 $colShadow, -1px -1px 0 $colShadow;
   text-align: center;
   font-family: '04b03', monospace;
   font-size: 6pt * 4;
@@ -89,6 +91,17 @@ canvas {
   padding-top: 40px;
   text-align: center;
   text-shadow: 0 1px 1px #000;
+}
+#time {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+
+  img {
+    vertical-align: middle;
+    height: 64px;
+    width: 64px;
+  }
 }
 
 /** Boot logo **/

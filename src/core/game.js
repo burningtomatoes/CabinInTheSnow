@@ -18,6 +18,10 @@ var Game = {
         this.maps = [];
         this.lastMapId = null;
 
+        // Clear game state
+        Time.reset();
+
+        // Load up the game starting position
         this.loadMap('forest_1');
     },
 
@@ -101,6 +105,8 @@ var Game = {
         if (this.map != null) {
             this.map.draw(ctx);
         }
+
+        Time.draw(ctx);
     },
 
     update: function () {
@@ -111,5 +117,6 @@ var Game = {
         Dialogue.update();
         Keyboard.update();
         Camera.update();
+        Time.update();
     }
 };
