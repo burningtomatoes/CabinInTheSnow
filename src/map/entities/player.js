@@ -41,26 +41,26 @@ var Player = Entity.extend({
         }
 
         if (!this.isTeleporting && this.canControl) {
-            if (Keyboard.isKeyDown(KeyEvent.DOM_VK_LEFT) || Keyboard.isKeyDown(KeyEvent.DOM_VK_A)) {
+            if (Keyboard.isKeyDown(KeyCode.LEFT) || Keyboard.isKeyDown(KeyCode.A)) {
                 this.velocityX = -this.movementSpeed;
                 this.direction = Direction.LEFT;
-            } else if (Keyboard.isKeyDown(KeyEvent.DOM_VK_RIGHT) || Keyboard.isKeyDown(KeyEvent.DOM_VK_D)) {
+            } else if (Keyboard.isKeyDown(KeyCode.RIGHT) || Keyboard.isKeyDown(KeyCode.D)) {
                 this.velocityX = +this.movementSpeed;
                 this.direction = Direction.RIGHT;
             } else {
                 this.velocityX = 0;
             }
-            if (Keyboard.isKeyDown(KeyEvent.DOM_VK_UP) || Keyboard.isKeyDown(KeyEvent.DOM_VK_W)) {
+            if (Keyboard.isKeyDown(KeyCode.UP) || Keyboard.isKeyDown(KeyCode.W)) {
                 this.velocityY = -this.movementSpeed;
                 this.direction = Direction.UP;
-            } else if (Keyboard.isKeyDown(KeyEvent.DOM_VK_DOWN) || Keyboard.isKeyDown(KeyEvent.DOM_VK_S)) {
+            } else if (Keyboard.isKeyDown(KeyCode.DOWN) || Keyboard.isKeyDown(KeyCode.S)) {
                 this.velocityY = +this.movementSpeed;
                 this.direction = Direction.DOWN;
             } else {
                 this.velocityY = 0;
             }
 
-            if (Keyboard.wasKeyPressed(KeyEvent.DOM_VK_SPACE)) {
+            if (Keyboard.wasKeyPressed(KeyCode.SPACE)) {
                 var interactRect = this.getInteractRadius();
 
                 var entities = this.map.getEntitiesInRect(interactRect, this);

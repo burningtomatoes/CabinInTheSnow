@@ -62,7 +62,7 @@ var Dialogue = {
         for (var i = 0; i < this.optionHooks.length; i++) {
             var number = this.optionHooks[i];
 
-            if (Keyboard.wasKeyPressed(KeyEvent['DOM_VK_' + number])) {
+            if (Keyboard.wasKeyPressed(KeyCode[number])) {
                 this.hide(number);
                 return;
             }
@@ -135,13 +135,13 @@ var Dialogue = {
             this.typeDelay = this.fastMode ? 1 : 4;
         }
 
-        if (Keyboard.isKeyDown(KeyEvent.DOM_VK_SPACE)) {
+        if (Keyboard.isKeyDown(KeyCode.SPACE)) {
             this.fastMode = true;
         } else {
             this.fastMode = false;
         }
 
-        if (!anyLeft && Keyboard.wasKeyPressed(KeyEvent.DOM_VK_SPACE)) {
+        if (!anyLeft && Keyboard.wasKeyPressed(KeyCode.SPACE)) {
             var isLastPage = this.currentPageIdx >= this.pages.length - 1;
 
             if (isLastPage) {
