@@ -1,0 +1,175 @@
+/** Fonts **/
+@font-face {
+  font-family: '04b03';
+  src: url('../fonts/04b03.ttf');
+}
+
+/** Reset & core **/
+*, *:after, *:before {
+  box-sizing: border-box;
+  // Disable text selection
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  // Show default cursor to avoid it looking like text is seelctable
+  cursor: default;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+img {
+  border: 0;
+}
+.hide {
+  display: none;
+}
+
+/** Typography **/
+body {
+  background: #fff;
+  color: #000;
+  text-align: center;
+  font-family: '04b03', monospace;
+  font-size: 6pt * 4;
+}
+h1, h2, h3, h4, h5, b, strong {
+  font-weight: normal;
+}
+h1 {
+  font-size: 6pt * 6;
+}
+h2 {
+  font-size: 6pt * 5;
+}
+h3 {
+  font-size: 6pt * 4;
+}
+
+/** Canvas **/
+canvas {
+  /** We want nearest neighbor stretching (pixelated) for all canvas elements **/
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+$width: 640px * 2;
+$height: 400px * 2;
+
+#game, #hud, #text {
+  position: fixed;
+  width: $width;
+  height: $height;
+  top: 50%;
+  left: 50%;
+  margin-top: -($height / 2);
+  margin-left: -($width / 2);
+  z-index: 100;
+}
+#hud {
+  // #hud is an exact overlay of the game canvas
+  display: none;
+  z-index: 200;
+  padding: 15px;
+  text-align: left;
+
+  #fps {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+}
+#text {
+  z-index: 300;
+  padding-top: $height / 3 + 40px;
+  text-align: center;
+  text-shadow: 0 1px 1px #000;
+}
+
+/** Boot logo **/
+#burningtomato {
+  $height: 500px;
+  height: $height;
+  top: 50%;
+  margin-top: -($height / 2) - 50;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  left: 0;
+  right: 0;
+  color: #000;
+}
+
+/** Dialogue **/
+.dialogue {
+  background: rgba(0, 0, 0, 0.65);
+  position: fixed;
+  width: 600px;
+  height: 200px;
+  z-index: 999999;
+  color: #fff;
+  text-shadow: 0 1px 1px #000;
+  bottom: 100px;
+  left: 50%;
+  margin-left: -300px;
+  font-size: 6pt * 3;
+  text-align: left;
+  padding: 0 25px;
+
+  .name {
+    border: 1px solid #ccc;
+    padding: 5px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  .content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+  }
+
+  .next {
+    display: block;
+    color: #fff;
+    border: 1px solid #ccc;
+    font-size: 6pt * 2;
+    padding: 2px;
+    text-align: center;
+    width: 100px;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+  }
+
+  .options {
+    border: 1px solid #ccc;
+    padding: 5px;
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background: rgba(0, 0, 0, 0.65);
+
+    .option {
+      margin: 5px;
+      padding: 5px;
+      border: 1px solid #555;
+
+      &.selected {
+        border: 1px solid #ccc;
+      }
+    }
+  }
+}
