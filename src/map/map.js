@@ -101,9 +101,9 @@ var Map = Class.extend({
         Camera.centerToMap();
 
         // Add the player, and spawn them in the correct position
-        //var player = new Player();
-        //this.configurePlayerSpawn(player);
-        //this.addPlayer(player);
+        var player = new Player();
+        this.configurePlayerSpawn(player);
+        this.addPlayer(player);
 
         // Run ambient soundscapes
         Music.stopAll();

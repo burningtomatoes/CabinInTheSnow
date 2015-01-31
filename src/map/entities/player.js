@@ -13,17 +13,12 @@ var Player = Entity.extend({
         this.width = 40;
         this.height = 26;
 
-        this.spriteHead = Gfx.load('head_detective');
-        this.spriteBody = Gfx.load('body_detective');
-        this.spriteShadow = Gfx.load('shadow_body_generic');
-    },
-
-    getNamePrefix: function () {
-        return '';
+        this.spriteHead = Gfx.load('adventurer_head');
+        this.spriteBody = Gfx.load('adventurer_body');
     },
 
     getDisplayName: function () {
-        return 'The Detective';
+        return 'You';
     },
 
     footstepDelayer: 0,

@@ -106,10 +106,6 @@ var Entity = Class.extend({
         return (this.canMoveLeft() || this.canMoveDown() || this.canMoveUp() || this.canMoveRight());
     },
 
-    getNamePrefix: function () {
-        return '';
-    },
-
     getDisplayName: function () {
         return '???';
     },
