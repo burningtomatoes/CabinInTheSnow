@@ -35,10 +35,16 @@ var Time = {
             this.timer = 0;
         }
 
-        var hrs = this.getHour();
+        var isDaytime = this.isDaytime();
 
         this.$time.find('span').text('Day ' + this.day + ', ' + this.formatTime());
-        this.$time.find('img').attr('src', 'assets/images/' + (hrs >= 6 && hrs <= 18 ? 'daytime' : 'nighttime') + '.png');
+        this.$time.find('img').attr('src', 'assets/images/' + (isDaytime ? 'daytime' : 'nighttime') + '.png');
+        $('#hud').css('color', isDaytime ? '#000' : '#FFF');
+    },
+
+    isDaytime: function () {
+        var hrs = this.getHour();
+        return hrs >= 6 && hrs <= 18;
     },
 
     draw: function (ctx) {
