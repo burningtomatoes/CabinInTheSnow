@@ -113,6 +113,8 @@ var Entity = Class.extend({
     draw: function (ctx) {
         ctx.save();
         ctx.translate(Camera.translateX(this.posX), Camera.translateY(this.posY));
+        //ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+        //ctx.globalCompositeOperation = "lighter";
 
         switch (this.direction) {
             case Direction.UP:
@@ -197,11 +199,11 @@ var Entity = Class.extend({
             this.headBob = 0;
         }
 
-        if (this.spriteBody.isAnimation) {
+        if (this.spriteBody != null && this.spriteBody.isAnimation) {
             this.spriteBody.update();
         }
 
-        if (this.spriteHead.isAnimation) {
+        if (this.spriteHead != null && this.spriteHead.isAnimation) {
             this.spriteHead.update();
         }
     },

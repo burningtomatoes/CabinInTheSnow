@@ -22,6 +22,7 @@ var Player = Entity.extend({
     },
 
     footstepDelayer: 0,
+    footstepFoot: 0,
 
     update: function() {
         if (this.velocityX != 0 || this.velocityY != 0) {
@@ -32,6 +33,24 @@ var Player = Entity.extend({
             if (this.footstepDelayer == 0) {
                 Sfx.play('footstep.wav', 0.25);
                 this.footstepDelayer = 20;
+                this.footstepFoot = (this.footstepFoot == 1) ? 0 : 1;
+
+                if (this.direction == Direction.UP) {
+                    if (this.footstepFoot == 1) this.map.add(new Footstep(this.posX, this.posY, this.direction));
+                    if (this.footstepFoot == 0) this.map.add(new Footstep(this.posX + this.width - 7, this.posY, this.direction));
+                } else if (this.direction == Direction.DOWN) {
+                    if (this.footstepFoot == 1) this.map.add(new Footstep(this.posX, this.posY + 7, this.direction));
+                    if (this.footstepFoot == 0) this.map.add(new Footstep(this.posX + this.width - 7, this.posY + 7, this.direction));
+                } else if (this.direction == Direction.LEFT) {
+                    if (this.footstepFoot == 1) this.map.add(new Footstep(this.posX  , this.posY, this.direction));
+                    if (this.footstepFoot == 0) this.map.add(new Footstep(this.posX , this.posY + this.height, this.direction));
+                } else if (this.direction == Direction.RIGHT) {
+                    if (this.footstepFoot == 1) this.map.add(new Footstep(this.posX + this.width - 7, this.posY, this.direction));
+                    if (this.footstepFoot == 0) this.map.add(new Footstep(this.posX + this.width - 7, this.posY + this.height, this.direction));
+                }
+
+                this.headBobTimer = 99;
+                this.headBob = this.footstepFoot;
             }
         }
 
