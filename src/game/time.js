@@ -35,7 +35,10 @@ var Time = {
             this.timer = 0;
         }
 
+        var hrs = this.getHour();
+
         this.$time.find('span').text('Day ' + this.day + ', ' + this.formatTime());
+        this.$time.find('img').attr('src', 'assets/images/' + (hrs >= 6 && hrs <= 18 ? 'daytime' : 'nighttime') + '.png');
     },
 
     draw: function (ctx) {
