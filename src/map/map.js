@@ -110,7 +110,7 @@ var Map = Class.extend({
 
         var props = this.data.properties;
         if (props.ambience && !Settings.shutUpSoundscapes) {
-            Music.loopSound(this.data.properties.ambience);
+            Music.loopSound(this.data.properties.ambience, 0.10);
         }
 
         // Spawns (NPCs) as defined in the map data

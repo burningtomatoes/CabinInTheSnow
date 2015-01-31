@@ -47,7 +47,8 @@
  "orientation":"orthogonal",
  "properties":
     {
-
+     "ambience":"artic_winds.mp3",
+     "exterior":"1"
     },
  "renderorder":"right-down",
  "tileheight":32,
