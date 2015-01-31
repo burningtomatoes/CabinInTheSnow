@@ -11,7 +11,7 @@ var Player = Entity.extend({
         this._super();
 
         this.width = 40;
-        this.height = 26;
+        this.height = 23;
 
         this.spriteHead = Gfx.load('adventurer_head');
         this.spriteBody = Gfx.load('adventurer_body');
