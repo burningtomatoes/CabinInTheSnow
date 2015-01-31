@@ -110,11 +110,15 @@ var Entity = Class.extend({
         return '???';
     },
 
+    applyDrawTranslations: function (ctx) {
+        // To be implemented by children where needed.
+    },
+
     draw: function (ctx) {
         ctx.save();
         ctx.translate(Camera.translateX(this.posX), Camera.translateY(this.posY));
-        //ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-        //ctx.globalCompositeOperation = "lighter";
+
+        this.applyDrawTranslations(ctx);
 
         switch (this.direction) {
             case Direction.UP:
