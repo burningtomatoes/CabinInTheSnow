@@ -119,7 +119,7 @@ var Map = Class.extend({
         // Prepare tile animations
         this.prepareTidAnimations();
 
-        this.snowEmitter = new Snow(100);
+        this.snowEmitter = new Snow(200);
     },
 
     configurePlayerSpawn: function (playerEntity) {
