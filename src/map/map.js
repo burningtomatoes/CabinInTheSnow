@@ -63,6 +63,8 @@ var Map = Class.extend({
     tidTranslations: [],
     tidAnimations: [],
 
+    snowEmitter: null,
+
     processData: function () {
         // Load & prepare the tileset for rendering
         var tilesetSrc = this.data.tilesets[0].image;
@@ -117,8 +119,7 @@ var Map = Class.extend({
         // Prepare tile animations
         this.prepareTidAnimations();
 
-        // Update HUD
-        $('#location').text(this.data.properties.name);
+        this.snowEmitter = new Snow(100);
     },
 
     configurePlayerSpawn: function (playerEntity) {
@@ -398,6 +399,10 @@ var Map = Class.extend({
         this.drawBackground(ctx);
         this.drawEntities(ctx);
 
+        if (this.snowEmitter != null) {
+            this.snowEmitter.draw(ctx);
+        }
+
         if (this.overlay != null) {
             ctx.drawImage(this.overlay, 0, 0, Canvas.canvas.width, Canvas.canvas.height, 0, 0, Canvas.canvas.width, Canvas.canvas.height);
         }
@@ -496,6 +501,10 @@ var Map = Class.extend({
         if (this.script != null) {
             this.script.update();
         }
+
+        if (this.snowEmitter != null) {
+            this.snowEmitter.update();
+        }
     },
 
     updateEntities: function () {
@@ -560,5 +569,5 @@ var Map = Class.extend({
                 this.tidAnimations.push(animObj);
             }
         }
-    },
+    }
 });
