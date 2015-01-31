@@ -5,6 +5,7 @@ var Map = Class.extend({
     loading: false,
     loaded: false,
     data: null,
+    overlay: null,
 
     init: function () {
         this.clear();
@@ -76,6 +77,7 @@ var Map = Class.extend({
         this.tileset = Gfx.load(tilesetSrc);
         this.layers = this.data.layers;
         this.tilesPerRow = this.data.tilesets[0].imagewidth / Settings.tileSize;
+        this.overlay = Gfx.load('cold_overlay');
 
         // Avoid "undefined" errors and a boat load of checks by creating boilerplate dummy objects where needed
         if (typeof(this.data.properties) == 'undefined') {
@@ -395,6 +397,10 @@ var Map = Class.extend({
 
         this.drawBackground(ctx);
         this.drawEntities(ctx);
+
+        if (this.overlay != null) {
+            ctx.drawImage(this.overlay, 0, 0, Canvas.canvas.width, Canvas.canvas.height, 0, 0, Canvas.canvas.width, Canvas.canvas.height);
+        }
     },
 
     drawBackground: function (ctx) {
