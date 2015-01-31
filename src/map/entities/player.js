@@ -23,6 +23,7 @@ var Player = Entity.extend({
 
     footstepDelayer: 0,
     footstepFoot: 0,
+    lastFootstepSound: 0,
 
     update: function() {
         if (this.velocityX != 0 || this.velocityY != 0) {
@@ -31,9 +32,19 @@ var Player = Entity.extend({
             }
 
             if (this.footstepDelayer == 0) {
-                Sfx.play('footstep.wav', 0.25);
                 this.footstepDelayer = 20;
                 this.footstepFoot = (this.footstepFoot == 1) ? 0 : 1;
+
+                var footstepSound = 0;
+
+                do {
+                    footstepSound = chance.integer({ min: 1, max: 4 });
+                }
+                while (footstepSound == this.lastFootstepSound);
+
+                this.lastFootstepSound = footstepSound;
+
+                Sfx.play('footstep_snow_' + footstepSound + '.wav', 0.25);
 
                 if (this.direction == Direction.UP) {
                     if (this.footstepFoot == 1) this.map.add(new Footstep(this.posX, this.posY, this.direction));
