@@ -10,6 +10,8 @@ var Sfx = {
         this.load('footstep_snow_4.wav');
         this.load('boom.wav');
         this.load('knock.wav');
+        this.load('door_closing.wav');
+        this.load('door_unlocked.wav');
     },
 
     load: function(fileName) {
