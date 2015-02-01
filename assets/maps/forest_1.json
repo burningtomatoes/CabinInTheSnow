@@ -146,6 +146,46 @@
          "width":32,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":32,
+         "name":"Objectlaag 1",
+         "objects":[
+                {
+                 "height":197,
+                 "name":"RemarkOnTracks",
+                 "properties":
+                    {
+                     "text":"Tire tracks... They've faded, but someone was here in the past few days."
+                    },
+                 "rotation":0,
+                 "type":"remark",
+                 "visible":true,
+                 "width":285,
+                 "x":323,
+                 "y":239
+                }, 
+                {
+                 "height":17,
+                 "name":"CabinDoor",
+                 "properties":
+                    {
+                     "target":""
+                    },
+                 "rotation":0,
+                 "type":"cabindoor",
+                 "visible":true,
+                 "width":43,
+                 "x":473,
+                 "y":83
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":32,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":

@@ -5,7 +5,7 @@ var Dialogue = {
     currentPageIdx: 0,
     currentTickerIdx: 0,
     typeDelay: 0,
-    fastMode: false,
+    fastMode: true,
     dialogueCallback: null,
     nextPageTimer: 0,
 
@@ -15,7 +15,7 @@ var Dialogue = {
         this.currentPageIdx = 0;
         this.currentTickerIdx = 0;
         this.typeDelay = 30;
-        this.fastMode = false;
+        this.fastMode = true;
         this.dialogueCallback = callback;
         this.optionHooks = [];
 

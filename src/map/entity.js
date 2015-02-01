@@ -106,10 +106,6 @@ var Entity = Class.extend({
         return (this.canMoveLeft() || this.canMoveDown() || this.canMoveUp() || this.canMoveRight());
     },
 
-    getDisplayName: function () {
-        return '???';
-    },
-
     applyDrawTranslations: function (ctx) {
         // To be implemented by children where needed.
     },
@@ -237,28 +233,8 @@ var Entity = Class.extend({
         return rect;
     },
 
-    doBasicDialogue: function (player, data, cb) {
-        player.canControl = false;
-
-        var textCompleteCallback = function (payload) {
-            player.canControl = true;
-            Camera.followEntity(player);
-
-            if (cb) {
-                cb(payload);
-            }
-        };
-
-        Camera.followEntity(this);
-
-        Dialogue.prepare(data, textCompleteCallback);
-        Dialogue.show();
-    },
-
     interact: function (player) {
-        this.doBasicDialogue(player, [
-            { text: 'Uh...hi there.', name: this.getDisplayName() }
-        ]);
+        // To be implemented.
     },
 
     lookAt: function (entity) {

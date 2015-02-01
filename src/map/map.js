@@ -94,8 +94,11 @@ var Map = Class.extend({
             }
         }
 
-        // Calculate blocking tiles, teleports, etc
+        // Calculate blocking tiles
         this.prepareBlockMap();
+
+        // Prepare objects (triggers, teleports, zones, etc)
+        this.loadObjects();
 
         // Center the camera on the middle of the map to start out
         Camera.centerToMap();
@@ -122,6 +125,7 @@ var Map = Class.extend({
         this.snowEmitter = new Snow(200);
     },
 
+    /******************* SPAWNING *******************/
     configurePlayerSpawn: function (playerEntity) {
         var spawnSource = 'initial';
         if (Game.lastMapId != null) {
@@ -155,24 +159,28 @@ var Map = Class.extend({
 
     redeploy: function () {
         Camera.followEntity(this.player, true);
-
-        this.player.isTeleporting = false;
         this.player.canControl = true;
     },
 
+    prepareMapSpawns: function () {
+        // ...
+    },
+
+    /******************* BLOCK MAPS (COLLISION STUFF) *******************/
     blockedRects: [],
-    teleRects: [],
     npcBlockedRects: [],
 
-    prepareMapSpawns: function () {
+    prepareBlockMap: function () {
+        this.blockedRects = [];
+        this.npcBlockedRects = [];
+        this.tidTranslations = {};
+
         var layerCount = this.layers.length;
 
         for (var i = 0; i < layerCount; i++) {
             var layer = this.layers[i];
 
-            var spawnId = layer.properties.spawn;
-
-            if (spawnId == null) {
+            if (layer.type != 'tilelayer') {
                 continue;
             }
 
@@ -181,56 +189,8 @@ var Map = Class.extend({
             var x = -1;
             var y = 0;
 
-            for (var tileIdx = 0; tileIdx < layerDataLength; tileIdx++) {
-                var tid = layer.data[tileIdx];
-
-                x++;
-
-                if (x >= this.width) {
-                    y++;
-                    x = 0;
-                }
-
-                if (tid === 0) {
-                    // Invisible (no tile set for this position)
-                    continue;
-                }
-
-                var entity = null;
-
-                // noinspection FallThroughInSwitchStatementJS
-                switch (spawnId) {
-                    default:
-                        console.warn('[Entity] Unknown spawn type, have an Officer instead:', spawnId);
-                    case 'officer':
-                        entity = new Officer();
-                        break;
-                }
-
-                entity.setCoord(x, y);
-                Game.map.add(entity);
-            }
-        }
-    },
-
-    prepareBlockMap: function () {
-        this.blockedRects = [];
-        this.teleRects = [];
-        this.npcBlockedRects = [];
-        this.tidTranslations = {};
-
-        var layerCount = this.layers.length;
-
-        for (var i = 0; i < layerCount; i++) {
-            var layer = this.layers[i];
-            var layerDataLength = layer.data.length;
-
-            var x = -1;
-            var y = 0;
-
             var isBlocking = layer.properties.blocked == '1';
             var isNpcBlocking = layer.properties.npc_block == '1';
-            var isTeleportingTo = layer.properties.teleport != null ? layer.properties.teleport : null;
 
             for (var tileIdx = 0; tileIdx < layerDataLength; tileIdx++) {
                 var tid = layer.data[tileIdx];
@@ -268,11 +228,6 @@ var Map = Class.extend({
 
                 if (isNpcBlocking) {
                     this.npcBlockedRects.push(rect);
-                }
-
-                if (isTeleportingTo != null) {
-                    rect.teleportTo = isTeleportingTo;
-                    this.teleRects.push(rect);
                 }
             }
         }
@@ -319,51 +274,9 @@ var Map = Class.extend({
         return false;
     },
 
-    getEntitiesInRect: function (ourRect, ignoreEntity) {
-        var entitiesMatched = [];
-
-        var entitiesLength = this.entities.length;
-        for (var k = 0; k < entitiesLength; k++) {
-            var entity = this.entities[k];
-
-            if (entity === ignoreEntity) {
-                continue;
-            }
-
-            var theirRect = entity.getRect();
-
-            if (Utils.rectIntersects(ourRect, theirRect)) {
-                entitiesMatched.push(entity);
-            }
-        }
-
-        return entitiesMatched;
-    },
-
-    getTeleport: function (rect) {
-        var teleportsLength = this.teleRects.length;
-
-        for (var i = 0; i < teleportsLength; i++) {
-            if (Utils.rectIntersects(rect, this.teleRects[i])) {
-                return this.teleRects[i].teleportTo;
-            }
-        }
-
-        return null;
-    },
-
+    /******************* ENTITY MANAGEMENT *******************/
     clear: function () {
         this.entities = [];
-    },
-
-    pause: function () {
-        this.paused = true;
-        $('#hud').hide();
-    },
-
-    resume: function () {
-        this.paused = false;
-        $('#hud').show();
     },
 
     player: null,
@@ -391,6 +304,7 @@ var Map = Class.extend({
         return false;
     },
 
+    /******************* DRAWING *******************/
     draw: function (ctx) {
         if (!this.loaded) {
             return;
@@ -413,6 +327,11 @@ var Map = Class.extend({
 
         for (var i = 0; i < layerCount; i++) {
             var layer = this.layers[i];
+
+            if (layer.type != 'tilelayer') {
+                continue;
+            }
+
             var layerDataLength = layer.data.length;
 
             var x = -1;
@@ -481,6 +400,7 @@ var Map = Class.extend({
         }
     },
 
+    /******************* UPDATING & SCRIPTING *******************/
     script: null,
 
     runScript: function (scriptObj) {
@@ -515,6 +435,17 @@ var Map = Class.extend({
         }
     },
 
+    pause: function () {
+        this.paused = true;
+        $('#hud').hide();
+    },
+
+    resume: function () {
+        this.paused = false;
+        $('#hud').show();
+    },
+
+    /******************* TILE ANIMATIONS *******************/
     updateTileAnimations: function () {
         var configuredAnims = this.tidAnimations.length;
         for (var i = 0; i < configuredAnims; i++) {
@@ -567,6 +498,101 @@ var Map = Class.extend({
                 animObj.animateTimer = animObj.animSpeed;
 
                 this.tidAnimations.push(animObj);
+            }
+        }
+    },
+
+    /******************* OBJECT MANAGEMENT *******************/
+    objZones: [],
+    objTriggers: [],
+
+    loadObjects: function () {
+        this.objZones = [];
+        this.objTriggers = [];
+
+        // Process all layers of type "object group". These are simple rectangle shapes drawn in Tiled that cover
+        // certain zones. They are not entities or tiles, and exist outside of the normal 32x32 tile bounds.
+        //
+        // There are two important types of objects:
+        //  - Zones (Trigger on entry of the rect, like teleport zones)
+        //  - Triggers (Trigger when the user presses SPACE to interact with something)
+        for (var i = 0; i < this.layers.length; i++) {
+            var layer = this.layers[i];
+
+            if (layer.type != 'objectgroup') {
+                continue;
+            }
+
+            var objects = layer.objects;
+
+            for (var j = 0; j < objects.length; j++) {
+                var obj = objects[j];
+
+                var objData = {
+                    map: this,
+                    name: obj.name,
+                    type: obj.type,
+                    x: obj.x,
+                    y: obj.y,
+                    w: obj.width,
+                    h: obj.height,
+                    properties: obj.properties
+                };
+
+                var mapObjectClass = window.mapObjects[obj.type];
+
+                if (typeof mapObjectClass == 'undefined') {
+                    console.warn('[Objects] Did not recognize map object of type', obj.type);
+                    continue;
+                }
+
+                var mapObject = new mapObjectClass(objData);
+
+                switch (mapObject.interactionType) {
+                    case ObjectInteractionType.TRIGGER:
+                        this.objTriggers.push(mapObject);
+                        break;
+                    case ObjectInteractionType.AREA:
+                        this.objZones.push(mapObject);
+                        break;
+                }
+            }
+        }
+    },
+
+    doInteract: function (entity) {
+        var ourRect = entity.getRect();
+
+        for (var i = 0; i < this.objTriggers.length; i++) {
+            var obj = this.objTriggers[i];
+            var theirRect = obj.getRect();
+
+            if (!obj.canTrigger()) {
+                continue;
+            }
+
+            if (Utils.rectIntersects(ourRect, theirRect)) {
+                obj.trigger(entity);
+                return;
+            }
+        }
+    },
+
+    checkZones: function (entity) {
+        var ourRect = entity.getRect();
+
+        for (var i = 0; i < this.objZones.length; i++) {
+            var obj = this.objZones[i];
+
+            if (!obj.canTrigger()) {
+                continue;
+            }
+
+            var theirRect = obj.getRect();
+
+            if (Utils.rectIntersects(ourRect, theirRect)) {
+                obj.trigger(entity);
+                return;
             }
         }
     }

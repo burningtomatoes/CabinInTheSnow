@@ -1,10 +1,5 @@
 var Player = Entity.extend({
-    isTeleporting: false,
-    teleportTo: null,
-    teleportTimer: 0,
-
     isPlayer: true,
-
     canControl: true,
 
     init: function() {
@@ -17,16 +12,15 @@ var Player = Entity.extend({
         this.spriteBody = Gfx.load('adventurer_body');
     },
 
-    getDisplayName: function () {
-        return 'You';
-    },
-
     footstepDelayer: 0,
     footstepFoot: 0,
     lastFootstepSound: 0,
+    isMoving: false,
 
     update: function() {
         if (this.velocityX != 0 || this.velocityY != 0) {
+            this.isMoving = true;
+
             if (this.footstepDelayer > 0) {
                 this.footstepDelayer--;
             }
@@ -63,9 +57,11 @@ var Player = Entity.extend({
                 this.headBobTimer = 99;
                 this.headBob = this.footstepFoot;
             }
+        } else {
+            this.isMoving = false;
         }
 
-        if (!this.isTeleporting && this.canControl) {
+        if (this.canControl) {
             if (Keyboard.isKeyDown(KeyCode.LEFT) || Keyboard.isKeyDown(KeyCode.A)) {
                 this.velocityX = -this.movementSpeed;
                 this.direction = Direction.LEFT;
@@ -85,28 +81,12 @@ var Player = Entity.extend({
                 this.velocityY = 0;
             }
 
-            if (Keyboard.wasKeyPressed(KeyCode.SPACE)) {
-                var interactRect = this.getInteractRadius();
-
-                var entities = this.map.getEntitiesInRect(interactRect, this);
-                var entity = entities.length > 0 ? entities[0] : null;
-
-                if (entity != null) {
-                    entity.interact(this);
-                    return;
-                }
-
-                var teleport = this.map.getTeleport(interactRect);
-
-                if (teleport != null) {
-                    this.isTeleporting = true;
-                    Game.loadMap(teleport);
-                    this.map.remove(this);
-                    Sfx.play('door_closing.wav');
-                    return;
-                }
+            if (Keyboard.wasKeyPressed(KeyCode.SPACE) && !Dialogue.running) {
+                this.map.doInteract(this);
             }
         }
+
+        this.map.checkZones(this);
 
         this._super();
     }
