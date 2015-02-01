@@ -83,6 +83,8 @@ var Player = Entity.extend({
 
             if (Keyboard.wasKeyPressed(KeyCode.SPACE) && !Dialogue.running) {
                 this.map.doInteract(this);
+                this.velocityX = 0;
+                this.velocityY = 0;
             }
         }
 
