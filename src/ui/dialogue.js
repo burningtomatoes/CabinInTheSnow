@@ -7,6 +7,7 @@ var Dialogue = {
     typeDelay: 0,
     fastMode: false,
     dialogueCallback: null,
+    nextPageTimer: 0,
 
     prepare: function(data, callback) {
         this.pages = data;
@@ -21,6 +22,8 @@ var Dialogue = {
         if (this.dialogueCallback == null) {
             this.dialogueCallback = function() { };
         }
+
+        this.nextPageTimer = 0;
     },
 
     show: function() {
@@ -124,10 +127,10 @@ var Dialogue = {
                             this.optionHooks.push(idx);
                         }
                     } else {
-                        $('<div />')
-                            .addClass('next')
-                            .text('Space')
-                            .appendTo($dialogue);
+                        //$('<div />')
+                        //    .addClass('next')
+                        //    .text('Space')
+                        //    .appendTo($dialogue);
                     }
                 }
             }
@@ -135,21 +138,20 @@ var Dialogue = {
             this.typeDelay = this.fastMode ? 1 : 4;
         }
 
-        if (Keyboard.isKeyDown(KeyCode.SPACE)) {
-            this.fastMode = true;
-        } else {
-            this.fastMode = false;
-        }
+        if (!anyLeft) {
+            this.nextPageTimer++;
 
-        if (!anyLeft && Keyboard.wasKeyPressed(KeyCode.SPACE)) {
-            var isLastPage = this.currentPageIdx >= this.pages.length - 1;
+            if (this.nextPageTimer >= 120) {
+                var isLastPage = this.currentPageIdx >= this.pages.length - 1;
 
-            if (isLastPage) {
-                this.hide();
-            } else {
-                this.currentTickerIdx = 0;
-                this.currentPage = this.pages[++this.currentPageIdx];
-                this.typeDelay = 10;
+                if (isLastPage) {
+                    this.hide();
+                } else {
+                    this.currentTickerIdx = 0;
+                    this.currentPage = this.pages[++this.currentPageIdx];
+                    this.typeDelay = 10;
+                    this.nextPageTimer = 0;
+                }
             }
         }
     }
