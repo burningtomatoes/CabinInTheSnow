@@ -61,7 +61,7 @@ canvas {
   -ms-interpolation-mode: nearest-neighbor;
 }
 
-#game, #hud, #text {
+#game, #hud, #text, #textoverlay {
   position: fixed;
   left: 0;
   top: 0;
@@ -79,16 +79,24 @@ canvas {
   text-align: left;
 
   #fps {
-    position: absolute;
-    top: 15px;
+    position: fixed;
+    bottom: 15px;
     right: 15px;
+    color: yellow;
+    text-shadow: 0 0 1px #000;
   }
+}
+#textoverlay {
+  background: #000;
+  z-index: 300;
+  color: #fff;
 }
 #text {
   z-index: 300;
-  padding-top: 40px;
+  padding-top: 100px;
   text-align: center;
   text-shadow: 0 1px 1px #000;
+  font-size: 130%;
 }
 #time {
   position: absolute;

@@ -8,6 +8,8 @@ var Time = {
     timer: 0,
     clockTimer: 0,
     darkness: null,
+    announcedMorning: false,
+    announcedNightfall: false,
 
     reset: function () {
         this.SECONDS_PER_HOUR = (this.SECONDS_PER_MINUTE * 60);
@@ -18,6 +20,9 @@ var Time = {
         this.clockTimer = (60 * this.SECONDS_PER_MINUTE);
 
         this.darkness = Gfx.load('darkness');
+
+        this.announcedMorning = false;
+        this.announcedNightfall = false;
     },
 
     update: function () {
@@ -36,10 +41,33 @@ var Time = {
         }
 
         var isDaytime = this.isDaytime();
+        var hrs = this.getHour();
 
         this.$time.find('span').text('Day ' + this.day + ', ' + this.formatTime());
         this.$time.find('img').attr('src', 'assets/images/' + (isDaytime ? 'daytime' : 'nighttime') + '.png');
         $('#hud').css('color', isDaytime ? '#000' : '#FFF');
+
+        if (hrs >= 6 && hrs <= 8 && !this.announcedMorning) {
+            IntroText.run({
+                prefix: "Dawn of",
+                text: "Day " + this.day,
+                suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
+            });
+
+            this.announcedMorning = true;
+            this.announcedNightfall = false;
+        }
+
+        if (hrs >= 18 && hrs <= 20 && !this.announcedNightfall) {
+            IntroText.run({
+                prefix: "Night of",
+                text: "Day " + this.day,
+                suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
+            });
+
+            this.announcedMorning = true;
+            this.announcedNightfall = false;
+        }
     },
 
     isDaytime: function () {
@@ -80,6 +108,10 @@ var Time = {
         var hours = Math.floor(hourProgress);
 
         return hours;
+    },
+
+    getTotalHoursSurvived: function () {
+        return (this.day - 1) * 24 + (this.getHour());
     },
 
     formatTime: function () {
