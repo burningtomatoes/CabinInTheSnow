@@ -39,7 +39,7 @@ window.mapObjects['cabindoor'] = MapObject.extend({
         Sfx.play('door_unlocked.wav', 1.0);
 
         Dialogue.prepare([{
-            text: "It's open..."
+            text: "It's open... Here goes..."
         }], function () {
             this.doTeleport();
         }.bind(this));

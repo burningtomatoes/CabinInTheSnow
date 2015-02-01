@@ -167,7 +167,7 @@
                  "y":239
                 }, 
                 {
-                 "height":17,
+                 "height":20,
                  "name":"CabinDoor",
                  "properties":
                     {
@@ -176,7 +176,7 @@
                  "rotation":0,
                  "type":"cabindoor",
                  "visible":true,
-                 "width":43,
+                 "width":44,
                  "x":473,
                  "y":83
                 }],

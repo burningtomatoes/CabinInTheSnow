@@ -189,3 +189,21 @@ canvas {
     }
   }
 }
+
+// Letterbox
+.letterbox {
+  background: #000;
+  position: fixed;
+  z-index: 900;
+  left: 0;
+  right: 0;
+  height: 10%;
+
+  &.top {
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+}

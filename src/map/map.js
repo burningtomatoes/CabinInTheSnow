@@ -277,6 +277,7 @@ var Map = Class.extend({
     /******************* ENTITY MANAGEMENT *******************/
     clear: function () {
         this.entities = [];
+        this.letterBoxEnabled = true;
     },
 
     player: null,
@@ -305,6 +306,8 @@ var Map = Class.extend({
     },
 
     /******************* DRAWING *******************/
+    letterBoxEnabled: true,
+
     draw: function (ctx) {
         if (!this.loaded) {
             return;
@@ -319,6 +322,21 @@ var Map = Class.extend({
 
         if (this.overlay != null) {
             ctx.drawImage(this.overlay, 0, 0, Canvas.canvas.width, Canvas.canvas.height, 0, 0, Canvas.canvas.width, Canvas.canvas.height);
+        }
+
+        var needsLetterbox = this.player == null || !this.player.canControl;
+
+        if (needsLetterbox) {
+            if (!this.letterBoxEnabled) {
+                console.log('1');
+                // Draw letterbox effect to show the player that they're locked ("cutscene" mode)
+                $('.letterbox').stop().fadeIn('fast');
+                this.letterBoxEnabled = true;
+            }
+        } else if (this.letterBoxEnabled) {
+            console.log('0');
+            $('.letterbox').stop().fadeOut('fast');
+            this.letterBoxEnabled = false;
         }
     },
 
