@@ -3,6 +3,13 @@ var Sfx = {
 
     preload: function() {
         // Note to self: Do not preload "burning tomato". It doesn't work due to timing issues and just causes overhead.
+        this.load('dialogue_tick.wav');
+        this.load('footstep_snow_1.wav');
+        this.load('footstep_snow_2.wav');
+        this.load('footstep_snow_3.wav');
+        this.load('footstep_snow_4.wav');
+        this.load('boom.wav');
+        this.load('knock.wav');
     },
 
     load: function(fileName) {
