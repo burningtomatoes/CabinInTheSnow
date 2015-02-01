@@ -65,8 +65,8 @@ var Time = {
                 suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
             });
 
-            this.announcedMorning = true;
-            this.announcedNightfall = false;
+            this.announcedMorning = false;
+            this.announcedNightfall = true;
         }
     },
 

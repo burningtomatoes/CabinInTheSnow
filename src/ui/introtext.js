@@ -13,7 +13,6 @@ var IntroText = {
         $h3.text(data.suffix);
 
         $textOverlay.show();
-        Canvas.$canvas.hide();
         $h3.hide();
         $text.delay(500).fadeIn('fast', function () {
             Sfx.play('boom.wav', 1);
@@ -21,8 +20,6 @@ var IntroText = {
                 $text.delay(1000).fadeOut('slow', function () {
                     Game.map.resume();
                     $textOverlay.fadeOut(2000, function () {
-                        Canvas.$canvas.fadeIn('slow');
-
                         if (cb) {
                             cb();
                         }
