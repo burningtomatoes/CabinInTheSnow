@@ -181,6 +181,11 @@
                  "y":83
                 }],
          "opacity":1,
+         "properties":
+            {
+             "spawn_cabin":"15,3,3",
+             "spawn_initial":"15,25,1"
+            },
          "type":"objectgroup",
          "visible":true,
          "width":32,
