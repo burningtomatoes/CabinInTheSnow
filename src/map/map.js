@@ -314,15 +314,11 @@ var Map = Class.extend({
         Camera.followEntity(e, true);
     },
 
+    toRemove: [],
+
     remove: function (e) {
-        var idx = this.entities.indexOf(e);
-
-        if (idx > 0) {
-            this.entities.splice(idx, 1);
-            return true;
-        }
-
-        return false;
+        this.toRemove.push(e);
+        return true;
     },
 
     /******************* DRAWING *******************/
@@ -466,6 +462,19 @@ var Map = Class.extend({
     },
 
     updateEntities: function () {
+        var deleteCount = this.toRemove.length;
+
+        for (var i = 0; i < deleteCount; i++) {
+            var deleteEntity = this.toRemove[i];
+            var idx = this.entities.indexOf(deleteEntity);
+
+            if (idx >= 0) {
+                this.entities.splice(idx, 1);
+            }
+        }
+
+        this.toRemove = [];
+
         var entityCount = this.entities.length;
 
         for (var i = 0; i < entityCount; i++) {
