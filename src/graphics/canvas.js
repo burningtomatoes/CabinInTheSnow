@@ -3,6 +3,11 @@ var Canvas = {
     canvas: null,
     context: null,
 
+    scale: 1,
+
+    screenWidth: 0,
+    screenHeight: 0,
+
     lastRenderTime: null,
     fps: 0,
 
@@ -63,6 +68,9 @@ var Canvas = {
         var docWidth = $(document).width();
         var docHeight = $(document).height();
 
+        this.screenWidth = docWidth;
+        this.screenHeight = docHeight;
+
         var baseWidth = 640;
         var baseHeight = 400;
 
@@ -84,6 +92,7 @@ var Canvas = {
             .css('width', scaleWidth + 'px')
             .css('height', scaleHeight + 'px');
 
+        this.scale = scale;
 
         console.info('[Canvas] Canvas render resolution is ' + this.canvas.width + 'x' + this.canvas.height + '.');
         console.info('[Canvas] Rendering in browser at x' + scale + ' (' + scaleWidth + 'x' + scaleHeight + ').');
