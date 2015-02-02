@@ -113,7 +113,13 @@ var Map = Class.extend({
 
         var props = this.data.properties;
         if (props.ambience && !Settings.shutUpSoundscapes) {
-            Music.loopSound(this.data.properties.ambience, 0.10);
+            var vol = 0.10;
+
+            if (props.soundscape_volume) {
+                vol = parseFloat(props.soundscape_volume);
+            }
+
+            Music.loopSound(props.ambience, vol);
         }
 
         // Spawns (NPCs) as defined in the map data
@@ -131,6 +137,7 @@ var Map = Class.extend({
     },
 
     isInterior: function () {
+        if (this.data == null) return false;
         return this.data.properties.interior == '1';
     },
 
