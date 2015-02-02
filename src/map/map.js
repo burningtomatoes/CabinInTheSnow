@@ -122,7 +122,20 @@ var Map = Class.extend({
         // Prepare tile animations
         this.prepareTidAnimations();
 
-        this.snowEmitter = new Snow(200);
+        // Weather conditions
+        if (this.isInterior()) {
+            this.snowEmitter = null;
+        } else {
+            this.snowEmitter = new Snow(200);
+        }
+    },
+
+    isInterior: function () {
+        return this.data.properties.interior == '1';
+    },
+
+    isExterior: function () {
+        return !this.isInterior();
     },
 
     /******************* SPAWNING *******************/
