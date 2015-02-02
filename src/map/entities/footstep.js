@@ -29,6 +29,7 @@ var Footstep = Entity.extend({
         }
 
         if (this.alpha <= 0) {
+            this.alpha = 0;
             this.map.remove(this);
         }
     }
