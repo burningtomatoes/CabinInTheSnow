@@ -8,8 +8,8 @@ window.mapObjects['cabindoor'] = MapObject.extend({
     init: function (data) {
         this._super(data);
 
-        this.didKnock = false;
-        this.didOpen = false;
+        this.didKnock = Settings.skipIntroStory;
+        this.didOpen = Settings.skipIntroStory;
     },
 
     trigger: function (player) {

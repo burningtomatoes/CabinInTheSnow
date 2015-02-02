@@ -22,7 +22,7 @@ var Game = {
         Time.reset();
 
         // Load up the game starting position
-        this.loadMap('forest_1');
+        this.loadMap(Settings.skipIntroStory ? 'cabin' : 'forest_1');
     },
 
     reset: function (callback) {
