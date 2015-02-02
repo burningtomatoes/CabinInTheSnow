@@ -38,7 +38,8 @@ var Player = Entity.extend({
 
                 this.lastFootstepSound = footstepSound;
 
-                Sfx.play('footstep_snow_' + footstepSound + '.wav', 0.25);
+                var footstepType = this.map.isExterior() ? 'snow' : 'wood';
+                Sfx.play('footstep_' + footstepType + '_' + footstepSound + '.wav', 0.25);
 
                 if (this.direction == Direction.UP) {
                     if (this.footstepFoot == 1) this.map.add(new Footstep(this.posX, this.posY, this.direction));

@@ -8,6 +8,10 @@ var Sfx = {
         this.load('footstep_snow_2.wav');
         this.load('footstep_snow_3.wav');
         this.load('footstep_snow_4.wav');
+        this.load('footstep_wood_1.wav');
+        this.load('footstep_wood_2.wav');
+        this.load('footstep_wood_3.wav');
+        this.load('footstep_wood_4.wav');
         this.load('boom.wav');
         this.load('knock.wav');
         this.load('door_closing.wav');

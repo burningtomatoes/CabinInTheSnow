@@ -38,6 +38,10 @@
          "height":22,
          "name":"Walls",
          "opacity":1,
+         "properties":
+            {
+             "blocked":"1"
+            },
          "type":"tilelayer",
          "visible":true,
          "width":21,
@@ -49,6 +53,10 @@
          "height":22,
          "name":"Walls Alt",
          "opacity":1,
+         "properties":
+            {
+             "blocked":"0"
+            },
          "type":"tilelayer",
          "visible":true,
          "width":21,
