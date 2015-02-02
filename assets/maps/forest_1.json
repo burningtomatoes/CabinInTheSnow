@@ -196,7 +196,9 @@
  "properties":
     {
      "ambience":"artic_winds.mp3",
-     "exterior":"1"
+     "exterior":"1",
+     "spawn_cabin":"15,3,3",
+     "spawn_initial":"15,25,1"
     },
  "renderorder":"right-down",
  "tileheight":32,
