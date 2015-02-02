@@ -45,7 +45,7 @@ var Time = {
 
         this.$time.find('span').text('Day ' + this.day + ', ' + this.formatTime());
         this.$time.find('img').attr('src', 'assets/images/' + (isDaytime ? 'daytime' : 'nighttime') + '.png');
-        $('#hud').css('color', isDaytime ? '#000' : '#FFF');
+        $('#hud').css('color', isDaytime && Game.map.isExterior() ? '#000' : '#FFF');
 
         if (hrs >= 6 && hrs <= 8 && !this.announcedMorning) {
             IntroText.run({

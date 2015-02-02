@@ -79,7 +79,7 @@ var Map = Class.extend({
         this.tileset = Gfx.load(tilesetSrc);
         this.layers = this.data.layers;
         this.tilesPerRow = this.data.tilesets[0].imagewidth / Settings.tileSize;
-        this.overlay = Gfx.load('cold_overlay');
+        this.overlay = this.isExterior() ? Gfx.load('cold_overlay') : null;
 
         // Avoid "undefined" errors and a boat load of checks by creating boilerplate dummy objects where needed
         if (typeof(this.data.properties) == 'undefined') {
