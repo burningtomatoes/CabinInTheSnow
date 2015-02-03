@@ -1,6 +1,10 @@
 var IntroText = {
+    running: false,
+
     run: function (data, cb) {
         Game.map.pause();
+
+        this.running = true;
 
         var $text = $('#text');
         var $textOverlay = $('#textoverlay');
@@ -20,6 +24,7 @@ var IntroText = {
                 $text.delay(1000).fadeOut('slow', function () {
                     Game.map.resume();
                     $textOverlay.fadeOut(2000, function () {
+                        IntroText.running = false;
                         if (cb) {
                             cb();
                         }
