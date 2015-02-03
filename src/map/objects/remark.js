@@ -29,6 +29,6 @@ window.mapObjects['remark'] = MapObject.extend({
     },
 
     canTrigger: function () {
-        return !this.wasSeen && !Dialogue.running;
+        return !this.wasSeen && !Dialogue.running && !Settings.ignoreRemarks;
     }
 });
