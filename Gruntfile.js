@@ -6,7 +6,7 @@ module.exports = function(grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> / www.burningtomato.com */\n'
             },
             build: {
-                src: ['src/3rdparty/inherit.js', 'src/settings.js', 'src/map/entity.js', 'src/map/object.js', 'src/**/*.js'],
+                src: ['src/3rdparty/inherit.js', 'src/settings.js', 'src/map/entity.js', 'src/map/object.js', 'src/game/item.js', 'src/**/*.js'],
                 dest: 'build/<%= pkg.name %>.min.js'
             }
         }

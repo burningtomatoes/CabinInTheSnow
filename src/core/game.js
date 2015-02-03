@@ -20,6 +20,7 @@ var Game = {
 
         // Clear game state
         Time.reset();
+        Inventory.clear();
 
         // Load up the game starting position
         this.loadMap(Settings.skipIntroStory ? 'cabin' : 'forest_1');
