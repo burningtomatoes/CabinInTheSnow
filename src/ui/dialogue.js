@@ -24,6 +24,9 @@ var Dialogue = {
         }
 
         this.nextPageTimer = 0;
+        this.awaitingOption = false;
+
+        $('.dialogue .options').hide();
     },
 
     show: function() {
@@ -38,10 +41,14 @@ var Dialogue = {
         this.running = true;
     },
 
-    hide: function(payload) {
+    hide: function() {
         if (!this.running) {
             return;
         }
+
+        var payload = {
+            option: this.optionIdx
+        };
 
         $('.dialogue').fadeOut('fast');
         this.running = false;
@@ -49,6 +56,8 @@ var Dialogue = {
     },
 
     optionHooks: [],
+    awaitingOption: false,
+    optionIdx: 0,
 
     update: function() {
         if (!this.running) {
@@ -121,16 +130,15 @@ var Dialogue = {
 
                             var $option = $('<div />')
                                 .addClass('option')
-                                .text('[Press ' + idx + '] ' + option)
+                                .text(option)
+                                .addClass(idx == 1 ? 'selected' : null)
+                                .addClass('idx_' + idx)
                                 .appendTo($options);
-
                             this.optionHooks.push(idx);
                         }
-                    } else {
-                        //$('<div />')
-                        //    .addClass('next')
-                        //    .text('Space')
-                        //    .appendTo($dialogue);
+
+                        this.awaitingOption = true;
+                        this.optionIdx = 1;
                     }
                 }
             }
@@ -138,20 +146,63 @@ var Dialogue = {
             this.typeDelay = this.fastMode ? 1 : 4;
         }
 
-        if (!anyLeft) {
+        var completePage = false;
+
+        if (this.awaitingOption) {
+            var targetIdx = this.optionIdx;
+            var targetChanged = false;
+
+            if (Keyboard.wasKeyPressed(KeyCode.DOWN) || Keyboard.wasKeyPressed(KeyCode.S)) {
+                targetIdx++;
+                targetChanged = true;
+            } else if (Keyboard.wasKeyPressed(KeyCode.UP) || Keyboard.wasKeyPressed(KeyCode.W)) {
+                targetIdx--;
+                targetChanged = true;
+            }
+
+            if (targetChanged) {
+                Sfx.play('dialogue_tick.wav');
+
+                if (targetIdx < 1) {
+                    targetIdx = this.optionHooks.length;
+                }
+
+                if (targetIdx > this.optionHooks.length) {
+                    targetIdx = 1;
+                }
+
+                $('.dialogue .option').removeClass('selected');
+                $('.dialogue .option.idx_' + targetIdx).addClass('selected');
+
+                Dialogue.optionIdx = targetIdx;
+
+                console.info(targetIdx);
+            }
+
+            if (Keyboard.wasKeyPressed(KeyCode.ENTER) || Keyboard.wasKeyPressed(KeyCode.SPACE)) {
+                Sfx.play('dialogue_tick.wav');
+                completePage = true;
+            }
+        }
+
+        if (!anyLeft && !this.awaitingOption) {
             this.nextPageTimer++;
 
             if (this.nextPageTimer >= 120) {
-                var isLastPage = this.currentPageIdx >= this.pages.length - 1;
+                completePage = true;
+            }
+        }
 
-                if (isLastPage) {
-                    this.hide();
-                } else {
-                    this.currentTickerIdx = 0;
-                    this.currentPage = this.pages[++this.currentPageIdx];
-                    this.typeDelay = 10;
-                    this.nextPageTimer = 0;
-                }
+        if (completePage) {
+            var isLastPage = this.currentPageIdx >= this.pages.length - 1;
+
+            if (isLastPage) {
+                this.hide();
+            } else {
+                this.currentTickerIdx = 0;
+                this.currentPage = this.pages[++this.currentPageIdx];
+                this.typeDelay = 10;
+                this.nextPageTimer = 0;
             }
         }
     }
