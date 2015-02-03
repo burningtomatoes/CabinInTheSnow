@@ -25,13 +25,26 @@ var Time = {
         this.announcedNightfall = false;
     },
 
+    addTime: function (time) {
+        this.timer += time;
+
+        while (this.timer >= this.SECONDS_PER_DAY) {
+            this.day++;
+            this.timer -= this.SECONDS_PER_DAY;
+        }
+    },
+
+    addHours: function (hrs) {
+        this.addTime(hrs * this.SECONDS_PER_HOUR);
+    },
+
     update: function () {
         if (this.clockTimer > 0) {
             this.clockTimer--;
         }
 
         if (this.clockTimer <= 0) {
-            this.timer += 1;
+            this.timer++;
             this.clockTimer = (60 * this.SECONDS_PER_MINUTE);
         }
 

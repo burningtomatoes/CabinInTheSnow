@@ -15,7 +15,8 @@ window.mapObjects['bed'] = MapObject.extend({
             }], function (data) {
                 if (data.option == 1) {
                     // Yes
-                    Time.timer += (Time.SECONDS_PER_HOUR * 6);
+                    Time.addHours(6);
+
                     $('#textoverlay').fadeIn('fast', function () {
                         player.canControl = true;
 
