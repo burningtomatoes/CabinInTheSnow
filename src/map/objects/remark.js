@@ -22,8 +22,6 @@ window.mapObjects['remark'] = MapObject.extend({
             text: this.text
         }];
 
-        console.log(dConfig);
-
         Dialogue.prepare(dConfig);
         Dialogue.show();
     },

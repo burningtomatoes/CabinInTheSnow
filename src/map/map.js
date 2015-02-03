@@ -345,13 +345,11 @@ var Map = Class.extend({
 
         if (needsLetterbox) {
             if (!this.letterBoxEnabled) {
-                console.log('1');
                 // Draw letterbox effect to show the player that they're locked ("cutscene" mode)
                 $('.letterbox').stop().fadeIn('fast');
                 this.letterBoxEnabled = true;
             }
         } else if (this.letterBoxEnabled) {
-            console.log('0');
             $('.letterbox').stop().fadeOut('fast');
             this.letterBoxEnabled = false;
         }
@@ -455,11 +453,9 @@ var Map = Class.extend({
         if (this.playingFireSfx && !this.fireplaceLit) {
             Music.stopSound('fireplace.mp3');
             this.playingFireSfx = false;
-            console.log('stop fire sfx');
         } else if (!this.playingFireSfx && this.fireplaceLit) {
             Music.loopSound('fireplace.mp3');
             this.playingFireSfx = true;
-            console.log('start fire sfx');
         }
 
         this.updateEntities();

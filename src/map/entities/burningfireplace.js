@@ -31,7 +31,5 @@ var BurningFirePlace = Entity.extend({
             this.map.fireplaceLit = false;
             this.map = null;
         }
-
-        console.log('its been hrs: ' + hoursSince);
     }
 });
