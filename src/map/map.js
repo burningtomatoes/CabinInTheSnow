@@ -180,6 +180,7 @@ var Map = Class.extend({
     redeploy: function () {
         Camera.followEntity(this.player, true);
         this.player.canControl = true;
+        this.playingFireSfx = false;
     },
 
     prepareMapSpawns: function () {
@@ -444,9 +445,21 @@ var Map = Class.extend({
         this.script = scriptObj;
     },
 
+    playingFireSfx: false,
+
     update: function () {
         if (this.paused) {
             return;
+        }
+
+        if (this.playingFireSfx && !this.fireplaceLit) {
+            Music.stopSound('fireplace.mp3');
+            this.playingFireSfx = false;
+            console.log('stop fire sfx');
+        } else if (!this.playingFireSfx && this.fireplaceLit) {
+            Music.loopSound('fireplace.mp3');
+            this.playingFireSfx = true;
+            console.log('start fire sfx');
         }
 
         this.updateEntities();
