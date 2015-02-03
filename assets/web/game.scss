@@ -197,10 +197,10 @@ canvas {
 .letterbox {
   background: #000;
   position: fixed;
-  z-index: 900;
   left: 0;
   right: 0;
   height: 10%;
+  z-index: 100;
 
   &.top {
     top: 0;
