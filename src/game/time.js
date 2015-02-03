@@ -104,9 +104,9 @@ var Time = {
             darkness = -(hour - 8) / 8;
         }
 
-        if (Game.map.isInterior() && Game.map.fireplaceLit && darkness > 0.5) {
+        if (Game.map.isInterior() && Game.map.fireplaceLit && darkness > 0.35) {
             // Clamp darkness as long as the fireplace is lit
-            darkness = 0.5;
+            darkness = 0.35;
         }
 
         ctx.save();
