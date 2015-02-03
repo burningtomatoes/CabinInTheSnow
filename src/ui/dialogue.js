@@ -71,15 +71,6 @@ var Dialogue = {
         var currentText = this.currentPage.text;
         var anyLeft = currentText.length > this.currentTickerIdx;
 
-        for (var i = 0; i < this.optionHooks.length; i++) {
-            var number = this.optionHooks[i];
-
-            if (Keyboard.wasKeyPressed(KeyCode[number])) {
-                this.hide(number);
-                return;
-            }
-        }
-
         if (this.typeDelay <= 0) {
             if (anyLeft) {
                 this.currentTickerIdx++;
