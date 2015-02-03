@@ -47,26 +47,28 @@ var Time = {
         this.$time.find('img').attr('src', 'assets/images/' + (isDaytime ? 'daytime' : 'nighttime') + '.png');
         $('#hud').css('color', isDaytime && Game.map.isExterior() ? '#000' : '#FFF');
 
-        if (hrs >= 6 && hrs <= 8 && !this.announcedMorning) {
-            IntroText.run({
-                prefix: "Dawn of",
-                text: "Day " + this.day,
-                suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
-            });
+        if (!Settings.skipTimeCallouts) {
+            if (hrs >= 6 && hrs <= 8 && !this.announcedMorning) {
+                IntroText.run({
+                    prefix: "Dawn of",
+                    text: "Day " + this.day,
+                    suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
+                });
 
-            this.announcedMorning = true;
-            this.announcedNightfall = false;
-        }
+                this.announcedMorning = true;
+                this.announcedNightfall = false;
+            }
 
-        if (hrs >= 18 && hrs <= 20 && !this.announcedNightfall) {
-            IntroText.run({
-                prefix: "Night of",
-                text: "Day " + this.day,
-                suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
-            });
+            if (hrs >= 18 && hrs <= 20 && !this.announcedNightfall) {
+                IntroText.run({
+                    prefix: "Night of",
+                    text: "Day " + this.day,
+                    suffix: "- Survived for " + this.getTotalHoursSurvived() + " hours -"
+                });
 
-            this.announcedMorning = false;
-            this.announcedNightfall = true;
+                this.announcedMorning = false;
+                this.announcedNightfall = true;
+            }
         }
     },
 

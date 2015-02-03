@@ -11,14 +11,6 @@ var Item = Class.extend({
 
     },
 
-    getName: function () {
-        return '???';
-    },
-
-    getDescription: function () {
-        return 'I have no idea what this is.';
-    },
-
     getIcon: function () {
         return this.type + '.png';
     }
