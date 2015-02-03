@@ -14,7 +14,7 @@ var BurningFirePlace = Entity.extend({
         this.spriteHead = new Animation('fireplace_lit', this.width, this.height, 10, 3, true);
         this.direction = Direction.UP;
 
-        this.timeStarted = Time.timer;
+        this.timeStarted = Time.timer + (Time.day * Time.SECONDS_PER_DAY);
 
         this.setCoord(10, 11);
         this.posY -= 18;
@@ -23,7 +23,8 @@ var BurningFirePlace = Entity.extend({
     update: function () {
         this._super();
 
-        var timeSince = Time.timer - this.timeStarted;
+        var curTime = Time.timer + (Time.day * Time.SECONDS_PER_DAY);
+        var timeSince = curTime - this.timeStarted;
         var hoursSince = Math.floor(timeSince / Time.SECONDS_PER_HOUR);
 
         if (hoursSince >= this.HOURS_PER_LIGHTING) {
