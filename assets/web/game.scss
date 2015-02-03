@@ -220,6 +220,7 @@ canvas {
     height: 70px;
     width: 70px;
     background: #000 url('../images/items/item_bg.png');
+    margin-top: 10px;
 
     img {
       position: absolute;
@@ -234,6 +235,7 @@ canvas {
       right: 7px;
       top: 7px;
       text-shadow: 1px 1px 1px #000;
+      color: #fff !important;
     }
   }
 }
