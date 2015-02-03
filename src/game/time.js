@@ -91,6 +91,11 @@ var Time = {
             darkness = -(hour - 8) / 8;
         }
 
+        if (Game.map.isInterior() && Game.map.fireplaceLit && darkness > 0.5) {
+            // Clamp darkness as long as the fireplace is lit
+            darkness = 0.5;
+        }
+
         ctx.save();
         ctx.globalAlpha = 0.75 * darkness;
         ctx.drawImage(this.darkness, 0, 0, Canvas.canvas.width, Canvas.canvas.height, 0, 0, Canvas.canvas.width, Canvas.canvas.height);

@@ -8,7 +8,12 @@ window.mapObjects['fireplace'] = MapObject.extend({
         var hasWood = Inventory.getItemQty(ItemTypes.FIRE_WOOD) >= this.WOOD_COST_PER_LIGHTING;
         var hasMatches = Inventory.getItemQty(ItemTypes.MATCH_BOX) >= 1;
 
-        if (hasWood && hasMatches) {
+        if (this.map.fireplaceLit) {
+            Dialogue.prepare([{
+                text: "It's warming up the room nicely now."
+            }]);
+        }
+        else if (hasWood && hasMatches) {
             player.canControl = false;
             Dialogue.prepare([{
                 text: "I have wood and matches. Should I try to light a fire?",
@@ -20,6 +25,13 @@ window.mapObjects['fireplace'] = MapObject.extend({
                 if (result.option == 1) {
                     // Light the fire.
                     Inventory.removeItems(ItemTypes.FIRE_WOOD, this.WOOD_COST_PER_LIGHTING);
+
+                    if (!this.map.fireplaceLit) {
+                        this.map.add(new BurningFirePlace());
+                        this.map.fireplaceLit = true;
+                    }
+
+                    player.canControl = true;
                 } else {
                     // Do nothing.
                     player.canControl = true;
