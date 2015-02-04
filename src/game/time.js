@@ -3,6 +3,8 @@ var Time = {
     SECONDS_PER_HOUR: 0,
     SECONDS_PER_DAY: 0,
 
+    DAYS_UNTIL_WIN: 3,
+
     $time: $('#time'),
     day: 1,
     timer: 0,
@@ -10,6 +12,7 @@ var Time = {
     darkness: null,
     announcedMorning: false,
     announcedNightfall: false,
+    didWin: false,
 
     reset: function () {
         this.SECONDS_PER_HOUR = (this.SECONDS_PER_MINUTE * 60);
@@ -23,6 +26,8 @@ var Time = {
 
         this.announcedMorning = false;
         this.announcedNightfall = false;
+
+        this.didWin = false;
     },
 
     addTime: function (time) {
@@ -39,6 +44,10 @@ var Time = {
     },
 
     update: function () {
+        if (this.didWin) {
+            return;
+        }
+
         if (this.clockTimer > 0) {
             this.clockTimer--;
         }
@@ -51,6 +60,14 @@ var Time = {
         if (this.timer >= this.SECONDS_PER_DAY) {
             this.day++;
             this.timer = 0;
+        }
+
+        if (this.day >= this.DAYS_UNTIL_WIN && this.getHour() >= 12) {
+            $('#hud').hide();
+            this.didWin = true;
+            Game.loadMap('win');
+            Needs.needs = [];
+            return;
         }
 
         var isDaytime = this.isDaytime();
