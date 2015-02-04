@@ -3,6 +3,7 @@ var Game = {
     maps: [],
     lastMapId: null,
     resetting: false,
+    dead: false,
 
     initialize: function () {
         Canvas.initialize();
@@ -19,12 +20,42 @@ var Game = {
         this.lastMapId = null;
 
         // Clear game state
+        this.dead = false;
+
         Time.reset();
         Inventory.clear();
         Needs.clear();
 
         // Load up the game starting position
         this.loadMap(Settings.skipIntroStory ? 'cabin' : 'forest_1');
+    },
+
+    die: function (reason) {
+        if (this.dead) {
+            return;
+        }
+
+        Music.stopAll();
+        Sfx.play('boom.wav');
+
+        var $deathUi = $('#death');
+        var $h1 = $deathUi.find('h1');
+        var $h2 = $deathUi.find('h2');
+        var $h3 = $deathUi.find('h3');
+
+        $h1.text(reason).hide();
+        $h2.text('You survived for ' + Time.getTotalHoursSurvived() + ' hours before you met your ultimate demise.').hide();
+        $h3.hide();
+
+        this.dead = true;
+
+        $deathUi.fadeIn('slow', function () {
+            $h1.fadeIn(3500, function () {
+                $h2.delay(1000).fadeIn('slow', function () {
+                    $h3.delay(1000).fadeIn('fast');
+                })
+            })
+        });
     },
 
     reset: function (callback) {
@@ -112,14 +143,21 @@ var Game = {
     },
 
     update: function () {
-        if (this.map != null) {
-            this.map.update();
-        }
+        if (this.dead) {
+            if (Keyboard.wasKeyPressed(KeyCode.SPACE)) {
+                $('#death').hide();
+                this.reset();
+            }
+        } else {
+            if (this.map != null) {
+                this.map.update();
+            }
 
-        Dialogue.update();
-        Keyboard.update();
-        Camera.update();
-        Time.update();
-        Needs.update();
+            Dialogue.update();
+            Keyboard.update();
+            Camera.update();
+            Time.update();
+            Needs.update();
+        }
     }
 };

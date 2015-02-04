@@ -157,6 +157,17 @@ canvas {
     width: 64px;
   }
 }
+#death {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 9999999999;
+  color: #fff;
+  padding-top: 200px;
+}
 
 /** Boot logo **/
 #burningtomato {

@@ -43,6 +43,18 @@ var Need = Class.extend({
                 }
                 break;
         }
+    },
+
+    describeDeath: function () {
+        switch (this.id) {
+            default:
+            case NeedType.COLD:
+                return "You froze to death.";
+            case NeedType.HUNGER:
+                return "You starved to death.";
+            case NeedType.SLEEP:
+                return "Deprived of sleep, you collapsed to the ground. And never woke up."
+        }
     }
 });
 
@@ -54,7 +66,7 @@ var Needs = {
 
         this.needs.push(new Need(NeedType.HUNGER, 'Hunger', 40));
         this.needs.push(new Need(NeedType.COLD, 'Cold', 30));
-        this.needs.push(new Need(NeedType.SLEEP, 'Sleep', 10));
+        this.needs.push(new Need(NeedType.SLEEP, 'Sleep', 50));
 
         this.setupUi();
     },
@@ -108,11 +120,6 @@ var Needs = {
         }
     },
 
-    die: function () {
-        alert('U DED');
-        // TODO death
-    },
-
     update: function () {
         if (this.uiSyncTimer > 0) {
             this.uiSyncTimer--;
@@ -148,7 +155,7 @@ var Needs = {
             }
 
             if (need.currentValue > need.maxValue) {
-                this.die();
+                Game.die(need.describeDeath());
                 return;
             }
         }
