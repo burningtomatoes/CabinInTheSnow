@@ -27,6 +27,24 @@ var Need = Class.extend({
 
     getPercentage: function () {
         return (this.currentValue / this.maxValue) * 100;
+    },
+
+    determineSpeed: function () {
+        switch (this.id) {
+            case NeedType.COLD:
+                if (Game.map.fireplaceLit) {
+                    this.currentSpeed = NeedsChange.GAINING;
+                } else if (Game.map.isInterior()) {
+                    this.currentSpeed = NeedsChange.LOSING;
+                } else if (Time.getHour() <= 6 || Time.getHour() >= 18 && Game.map.isExterior()) {
+                    this.currentSpeed = NeedsChange.LOSING_FAST;
+                } else {
+                    this.currentSpeed = NeedsChange.LOSING;
+                }
+                console.log(this.currentSpeed);
+
+                break;
+        }
     }
 });
 
@@ -109,6 +127,8 @@ var Needs = {
 
         for (var i = 0; i < this.needs.length; i++) {
             var need = this.needs[i];
+
+            need.determineSpeed();
 
             switch (need.currentSpeed) {
                 case NeedsChange.GAINING:
