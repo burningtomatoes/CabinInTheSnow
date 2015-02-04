@@ -65,8 +65,8 @@ var Needs = {
         this.needs = [];
 
         //this.needs.push(new Need(NeedType.HUNGER, 'Hunger', 40));
-        this.needs.push(new Need(NeedType.COLD, 'Cold', 30));
-        this.needs.push(new Need(NeedType.SLEEP, 'Sleep', 50));
+        this.needs.push(new Need(NeedType.COLD, 'Cold', 20));
+        this.needs.push(new Need(NeedType.SLEEP, 'Sleep', 20));
 
         this.setupUi();
     },
