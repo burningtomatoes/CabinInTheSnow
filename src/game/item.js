@@ -2,7 +2,8 @@ window.Items = { };
 
 window.ItemTypes = {
     FIRE_WOOD: 'firewood',
-    MATCH_BOX: 'matchbox'
+    MATCH_BOX: 'matchbox',
+    AXE: 'axe'
 };
 
 var Item = Class.extend({

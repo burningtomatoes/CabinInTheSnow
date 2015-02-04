@@ -27,7 +27,7 @@ window.mapObjects['bed'] = MapObject.extend({
                     }.bind(this));
                 } else {
                     // No
-                    player.canControl = false;
+                    player.canControl = true;
                 }
             }.bind(this));
         } else {

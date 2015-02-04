@@ -7,6 +7,7 @@ var Inventory = {
         if (Settings.spawnWithItems) {
             this.createAndAdd(ItemTypes.FIRE_WOOD, 25);
             this.createAndAdd(ItemTypes.MATCH_BOX, 1);
+            this.createAndAdd(ItemTypes.AXE, 1);
         }
 
         this.syncUi();
