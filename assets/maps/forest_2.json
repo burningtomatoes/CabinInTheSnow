@@ -92,6 +92,20 @@
                  "width":1019,
                  "x":-2,
                  "y":2
+                }, 
+                {
+                 "height":63,
+                 "name":"Matchbox",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"matchbox",
+                 "visible":true,
+                 "width":62,
+                 "x":707,
+                 "y":231
                 }],
          "opacity":1,
          "type":"objectgroup",

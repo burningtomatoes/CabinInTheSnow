@@ -2,16 +2,16 @@
  * Bed script in the cabin.
  */
 window.mapObjects['axe'] = MapObject.extend({
-    axeEntity: null,
+    matchBoxEntity: null,
 
     init: function (map) {
         this._super(map);
 
-        this.axeEntity = new Axe();
-        this.axeEntity.posX = this.x;
-        this.axeEntity.posY = this.y;
+        this.matchBoxEntity = new Axe();
+        this.matchBoxEntity.posX = this.x;
+        this.matchBoxEntity.posY = this.y;
 
-        this.map.add(this.axeEntity);
+        this.map.add(this.matchBoxEntity);
     },
 
     trigger: function (player) {
@@ -30,7 +30,7 @@ window.mapObjects['axe'] = MapObject.extend({
         }], function (data) {
             if (data.option == 1) {
                 Inventory.createAndAdd(ItemTypes.AXE, 1);
-                this.map.remove(this.axeEntity);
+                this.map.remove(this.matchBoxEntity);
             }
 
             player.canControl = true;
