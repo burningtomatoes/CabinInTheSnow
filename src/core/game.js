@@ -21,6 +21,7 @@ var Game = {
         // Clear game state
         Time.reset();
         Inventory.clear();
+        Needs.clear();
 
         // Load up the game starting position
         this.loadMap(Settings.skipIntroStory ? 'cabin' : 'forest_1');
@@ -119,5 +120,6 @@ var Game = {
         Keyboard.update();
         Camera.update();
         Time.update();
+        Needs.update();
     }
 };

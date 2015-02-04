@@ -19,6 +19,8 @@ window.mapObjects['axe'] = MapObject.extend({
 
         Dialogue.prepare([{
             text: "It's an axe. I might be able to cut down some of the smaller trees with this to get wood."
+        },{
+            text: "Though I'm afraid to think what its previous owner used it for..."
         }, {
             text: "Should I pick it up?",
             options: [

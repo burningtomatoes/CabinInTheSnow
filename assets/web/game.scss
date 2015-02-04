@@ -86,6 +86,54 @@ canvas {
     text-shadow: 0 0 1px #000;
   }
 }
+#needs {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  text-align: right;
+  font-size: 26px;
+
+  img {
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+
+  .progress {
+    display: block;
+    position: relative;
+    width: 200px;
+    height: 15px;
+    background: rgba(0, 0, 0, 0.75);
+    margin-bottom: 20px;
+
+    &.cold {
+      .inner {
+        background-color: deepskyblue;
+      }
+    }
+
+    &.hunger {
+      .inner {
+        background-color: darkred;
+      }
+    }
+
+    &.sleep {
+      .inner {
+        background-color: cadetblue;
+      }
+    }
+
+    .inner {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      bottom: 2px;
+      height: 11px;
+      background: red;
+    }
+  }
+}
 #textoverlay {
   background: #000;
   z-index: 9999;
