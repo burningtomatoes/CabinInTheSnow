@@ -184,7 +184,52 @@ var Map = Class.extend({
     },
 
     prepareMapSpawns: function () {
-        // ...
+        var layerCount = this.layers.length;
+
+        for (var i = 0; i < layerCount; i++) {
+            var layer = this.layers[i];
+
+            var spawnId = layer.properties.spawn;
+
+            if (spawnId == null) {
+                continue;
+            }
+
+            var layerDataLength = layer.data.length;
+
+            var x = -1;
+            var y = 0;
+
+            for (var tileIdx = 0; tileIdx < layerDataLength; tileIdx++) {
+                var tid = layer.data[tileIdx];
+
+                x++;
+
+                if (x >= this.width) {
+                    y++;
+                    x = 0;
+                }
+
+                if (tid === 0) {
+                    // Invisible (no tile set for this position)
+                    continue;
+                }
+
+                var entity = null;
+
+                // noinspection FallThroughInSwitchStatementJS
+                switch (spawnId) {
+                    default:
+                        console.warn('[Entity] Unknown spawn type, have an tree instead:', spawnId);
+                    case 'smalltree':
+                        entity = new SmallTree();
+                        break;
+                }
+
+                entity.setCoord(x, y);
+                Game.map.add(entity);
+            }
+        }
     },
 
     /******************* BLOCK MAPS (COLLISION STUFF) *******************/
