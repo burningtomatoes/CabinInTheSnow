@@ -39,6 +39,7 @@ window.mapObjects['bed'] = MapObject.extend({
                 if (data.option == 1) {
                     // Yes
                     Time.addHours(6);
+                    Needs.changeNeed(NeedType.SLEEP, -60);
 
                     $('#textoverlay').fadeIn('fast', function () {
                         player.canControl = true;

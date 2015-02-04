@@ -120,6 +120,16 @@ var Needs = {
         }
     },
 
+    changeNeed: function(needType, change) {
+        for (var i = 0; i < this.needs.length; i++) {
+            var xneed = this.needs[i];
+
+            if (xneed.id === needType) {
+                xneed.currentValue += change;
+            }
+        }
+    },
+
     update: function () {
         if (this.uiSyncTimer > 0) {
             this.uiSyncTimer--;
