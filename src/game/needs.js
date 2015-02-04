@@ -36,13 +36,11 @@ var Need = Class.extend({
                     this.currentSpeed = NeedsChange.GAINING;
                 } else if (Game.map.isInterior()) {
                     this.currentSpeed = NeedsChange.LOSING;
-                } else if (Time.getHour() <= 6 || Time.getHour() >= 18 && Game.map.isExterior()) {
+                } else if ((Time.getHour() <= 6 || Time.getHour() >= 18) && Game.map.isExterior()) {
                     this.currentSpeed = NeedsChange.LOSING_FAST;
                 } else {
                     this.currentSpeed = NeedsChange.LOSING;
                 }
-                console.log(this.currentSpeed);
-
                 break;
         }
     }
