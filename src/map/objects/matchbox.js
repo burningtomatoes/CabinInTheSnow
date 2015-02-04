@@ -23,8 +23,13 @@ window.mapObjects['matchbox'] = MapObject.extend({
             Inventory.createAndAdd(ItemTypes.MATCH_BOX, 1);
             this.map.remove(this.matchBoxEntity);
             player.canControl = true;
+            this.matchBoxEntity = null;
         }.bind(this));
 
         Dialogue.show();
+    },
+
+    canTrigger: function () {
+        return this.matchBoxEntity != null;
     }
 });

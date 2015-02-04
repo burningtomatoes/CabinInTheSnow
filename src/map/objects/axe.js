@@ -31,11 +31,16 @@ window.mapObjects['axe'] = MapObject.extend({
             if (data.option == 1) {
                 Inventory.createAndAdd(ItemTypes.AXE, 1);
                 this.map.remove(this.matchBoxEntity);
+                this.matchBoxEntity = null;
             }
 
             player.canControl = true;
         }.bind(this));
 
         Dialogue.show();
+    },
+
+    canTrigger: function () {
+        return this.matchBoxEntity != null;
     }
 });
