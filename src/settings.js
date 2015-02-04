@@ -15,10 +15,10 @@
 var Settings = {
     tileSize: 32,
 
-    skipBootLogo: true,
-    countFps: true,
-    skipIntroStory: true,
-    spawnWithItems: true,
-    skipTimeCallouts: true,
-    ignoreRemarks: true
+    skipBootLogo: false,
+    countFps: false,
+    skipIntroStory: false,
+    spawnWithItems: false,
+    skipTimeCallouts: false,
+    ignoreRemarks: false
 };
