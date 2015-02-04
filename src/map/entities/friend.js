@@ -33,14 +33,16 @@ var Friend = Entity.extend({
 
         if (this.posY <= 480) {
             this.velocityY = 0;
-            this.didFinals = true;
+                this.didFinals = true;
 
             Dialogue.prepare([{
                 text: "Dude! We've been looking for you for days!!!"
             }, {
                 text: "Holy shit...a-are you okay!? We were terrified you'd be dead by now."
             }, {
-                text: "We started fearing the worst. They say there's a murderer that lives in a cabin nearby."
+                text: "We started fearing the worst... Not to sound crazy, but they say there's a murderer that lives in a cabin nearby."
+            }, {
+                text: "Shit. You wouldn't believe how close we got to giving up on you. Thank God we found you."
             }, {
                 text: "Come on, let's go find the others. We've set up camp nearby."
             }], function () {
