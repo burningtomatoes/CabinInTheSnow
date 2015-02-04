@@ -110,6 +110,10 @@ var Entity = Class.extend({
         // To be implemented by children where needed.
     },
 
+    drawAddons: function (cxt) {
+
+    },
+
     draw: function (ctx) {
         ctx.save();
         ctx.translate(Camera.translateX(this.posX), Camera.translateY(this.posY));
@@ -152,6 +156,8 @@ var Entity = Class.extend({
                 ctx.drawImage(this.spriteHead, 0, 0, this.width, this.height, Math.round((this.spriteBody.width / 2) - (this.spriteHead.width / 2) - (this.headBob / 2)), -1, this.width, this.height);
             }
         }
+
+        this.drawAddons(ctx);
 
         ctx.restore();
 

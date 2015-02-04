@@ -674,9 +674,11 @@ var Map = Class.extend({
 
             if (Utils.rectIntersects(ourRect, theirRect)) {
                 obj.trigger(entity);
-                return;
+                return true;
             }
         }
+
+        return false;
     },
 
     checkZones: function (entity) {

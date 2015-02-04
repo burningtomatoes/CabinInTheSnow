@@ -16,6 +16,7 @@ var Sfx = {
         this.load('knock.wav');
         this.load('door_closing.wav');
         this.load('door_unlocked.wav');
+        this.load('chop.wav');
     },
 
     load: function(fileName) {

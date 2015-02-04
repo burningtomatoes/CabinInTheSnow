@@ -1,6 +1,7 @@
 var Player = Entity.extend({
     isPlayer: true,
     canControl: true,
+    chopTimer: 0,
 
     init: function() {
         this._super();
@@ -10,6 +11,8 @@ var Player = Entity.extend({
 
         this.spriteHead = Gfx.load('adventurer_head');
         this.spriteBody = Gfx.load('adventurer_body');
+
+        this.chopTimer = 0;
     },
 
     footstepDelayer: 0,
@@ -18,6 +21,10 @@ var Player = Entity.extend({
     isMoving: false,
 
     update: function() {
+        if (this.chopTimer > 0) {
+            this.chopTimer--;
+        }
+
         if (this.velocityX != 0 || this.velocityY != 0) {
             this.isMoving = true;
 
@@ -83,9 +90,31 @@ var Player = Entity.extend({
             }
 
             if (Keyboard.wasKeyPressed(KeyCode.SPACE) && !Dialogue.running) {
-                this.map.doInteract(this);
+                var didInteract = this.map.doInteract(this);
                 this.velocityX = 0;
                 this.velocityY = 0;
+
+                if (!didInteract && Inventory.getItemQty(ItemTypes.AXE) && this.chopTimer == 0) {
+                    var entities = this.map.entities;
+                    var ourRect = this.getInteractRadius();
+
+                    for (var i = 0; i < entities.length; i++) {
+                        var e = entities[i];
+
+                        if (!e.isTree) {
+                            continue;
+                        }
+
+                        var eRect = e.getRect();
+
+                        if (Utils.rectIntersects(ourRect, eRect)) {
+                            e.chop(this);
+                            Sfx.play('chop.wav');
+                            this.chopTimer = 30;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
