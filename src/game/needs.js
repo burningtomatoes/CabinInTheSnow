@@ -64,7 +64,7 @@ var Needs = {
     clear: function () {
         this.needs = [];
 
-        this.needs.push(new Need(NeedType.HUNGER, 'Hunger', 40));
+        //this.needs.push(new Need(NeedType.HUNGER, 'Hunger', 40));
         this.needs.push(new Need(NeedType.COLD, 'Cold', 30));
         this.needs.push(new Need(NeedType.SLEEP, 'Sleep', 50));
 
