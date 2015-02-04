@@ -30,6 +30,34 @@ var Game = {
         this.loadMap(Settings.skipIntroStory ? 'cabin' : 'forest_1');
     },
 
+    win: function () {
+        if (this.dead) {
+            return;
+        }
+
+        Music.stopAll();
+        Sfx.play('boom.wav');
+
+        var $deathUi = $('#death');
+        var $h1 = $deathUi.find('h1');
+        var $h2 = $deathUi.find('h2');
+        var $h3 = $deathUi.find('h3');
+
+        $h1.text('You have survived, and made it to safety.').hide();
+        $h2.text('After a trying ' + Time.getTotalHoursSurvived() + ' hours you finally managed to escape. And you lived happily ever after. Until you died.').hide();
+        $h3.hide();
+
+        this.dead = true;
+
+        $deathUi.fadeIn('slow', function () {
+            $h1.fadeIn(3500, function () {
+                $h2.delay(1000).fadeIn('slow', function () {
+                    $h3.delay(5000).fadeIn('fast');
+                })
+            })
+        });
+    },
+
     die: function (reason) {
         if (this.dead) {
             return;
