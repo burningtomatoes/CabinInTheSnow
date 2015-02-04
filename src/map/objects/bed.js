@@ -41,6 +41,10 @@ window.mapObjects['bed'] = MapObject.extend({
                     Time.addHours(6);
                     Needs.changeNeed(NeedType.SLEEP, -60);
 
+                    if (hasFire) {
+                        Needs.changeNeed(NeedType.COLD, -30);
+                    }
+
                     $('#textoverlay').fadeIn('fast', function () {
                         player.canControl = true;
 
