@@ -1,5 +1,5 @@
 var BurningFirePlace = Entity.extend({
-    HOURS_PER_LIGHTING: 6,
+    HOURS_PER_LIGHTING: 3,
 
     timeStarted: 0,
 
